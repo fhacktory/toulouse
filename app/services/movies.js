@@ -31,7 +31,15 @@ movies.service('$movies', function($http, $q){
     url += '?' + qs(data);
 
     $http.get(url).then(function(resp){
-      deferred.resolve(resp.data);
+      // Invalid status code
+      if(resp.status != 200)
+        return deferred.reject(resp);
+
+      // Any results ?
+      if(resp.data.results && resp.data.total_results == 0)
+        return deferred.reject(resp);
+
+      return deferred.resolve(resp.data);
     });
     return deferred.promise;
   }
@@ -53,6 +61,10 @@ movies.service('$movies', function($http, $q){
       return rest(api_url + 'movie/' + movie_id);
     },
 
+    // Get popular movies
+    similar : function(movie_id){
+      return rest(api_url + 'movie/' + movie_id + '/similar');
+    },
 
   };
 

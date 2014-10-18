@@ -21,9 +21,15 @@
   </div>
 
   <div class="row">
+    <video />
+  </div>
 
+  <div class="row" ng-show="similars">
+    <div class="col-xs-12">
+      <h3>Similar movies</h3>
+      <div class="col-sm-4" ng-repeat="movie in similars">
+        <a href="#/movie/{{ movie.id }}">{{ movie.title }}</h4>
+      </div>
+    </div>
   </div>
 </div>
-<pre>
-{{ movie|json  }}
-</pre>
