@@ -7,7 +7,7 @@ home.controller('HomeCtrl', function($scope, $movies){
   // List movies
   $scope.movies = null;
   var show_movies = function(name){
-    $movies.list(name).then(function(movies){
+    $movies.search(name).then(function(movies){
       $scope.list_title = '"'+name+'" movies';
       $scope.movies = movies.results;
     });

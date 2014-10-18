@@ -20,6 +20,53 @@
     </div>
   </div>
 
+  <div class="alert alert-warning" ng-hide="torrent" ng-hide="error">
+    <h4>Awaiting informations</h4>
+    Hang on...
+  </div>
+
+  <div class="alert alert-danger" ng-show="error">
+    <h4>No torrent</h4>
+    There is no video source available for this movie
+  </div>
+
+  <div class="row" ng-show="torrent">
+
+    <div class="alert alert-info" ng-show="torrent.status=='not_cached'">
+      <h4>New movie !</h4>
+      <span class="text-muted">Step 1 of 5</span> The movie has been added to the process list.
+    </div>
+
+    <div ng-show="torrent.status=='downloading'">
+      <div class="alert alert-info">
+        <h4>Downloading movie</h4>
+        <span class="text-muted">Step 2 of 5</span> The movie is being downloaded. It should be here in {{ torrent.eta | humanSeconds }}
+      </div>
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="{{ torrent.progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ torrent.progress }}%;">
+          {{ torrent.progress }} %
+        </div>
+      </div>
+    </div>
+
+    <div class="alert alert-info" ng-show="torrent.status=='pending_processing'">
+      <h4>Pending Process</h4>
+      <span class="text-muted">Step 3 of 5</span> The movie is waiting to be processed on our servers. Hang on !
+    </div>
+
+    <div class="alert alert-info" ng-show="torrent.status=='processing'">
+      <h4>Processing movie</h4>
+      <span class="text-muted">Step 4 of 5</span> The movie is being converted on our server and should be available in a few seconds !
+    </div>
+
+    <div class="alert alert-success" ng-show="torrent.status=='cached'">
+      <h4>Cached movie</h4>
+      The movie is now available !
+    </div>
+
+    <pre>{{ torrent | json }}</pre>
+  </div>
+
   <div class="row">
     <video />
   </div>

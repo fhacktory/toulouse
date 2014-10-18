@@ -2,6 +2,8 @@
 
 var toulouse = angular.module('toulouse', [
   'ngRoute',
+  'pascalprecht.translate',
+  'humanSeconds',
   'toulouse.home',
   'toulouse.editor',
 ]);
