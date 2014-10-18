@@ -1,0 +1,28 @@
+{
+  "name": "toulouse",
+  "version": "0.0.1",
+  "homepage": "https://github.com/fhacktory/toulouse",
+  "authors": [
+    "Bastien Abadie <bastien.abadie@gmail.com>"
+  ],
+  "description": "Chaton's frontend",
+  "main": "app/index.html",
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "chaton"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.0",
+    "bootstrap": "~3.2.0"
+  }
+}
