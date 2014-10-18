@@ -1,12 +1,26 @@
-<h1>{{movie.title}}</h1>
-<h4>
-  <span class="label label-info" ng-repeat="g in movie.genres">
-    {{ g.name }}
-  </span>
-</h4>
-<blockquote>
-  {{ movie.overview }}
-</blockquote>
+<div id="editor" ng-cloak ng-show="movie">
+  <div class="row header">
+    <div class="col-sm-2">
+      <img class="img-responsive img-rounded" ng-src="{{ 'http://image.tmdb.org/t/p/w185/' + movie.poster_path }}" />
+    </div>
+    <div class="col-sm-10">
+      <p class="actions pull-right">
+        <a ng-show="movie.imdb_id" href="http://www.imdb.com/title/{{ movie.imdb_id }}" class="btn btn-primary" target="_blank">View on Imdb</a>
+      </p>
+      <h1>{{movie.title}}</h1>
+      <h3>{{movie.tagline}}</h3>
+      <h4>
+        <span class="label label-info" ng-repeat="g in movie.genres">
+          {{ g.name }}
+        </span>
+      </h4>
+      <blockquote>
+        {{ movie.overview }}
+      </blockquote>
+    </div>
+  </div>
+
+
 <pre>
 {{ movie|json  }}
 </pre>

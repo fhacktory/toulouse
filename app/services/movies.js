@@ -28,7 +28,6 @@ movies.service('$movies', function($http, $q){
         data[k] = v;
       });
     }
-console.log(data);
     url += '?' + qs(data);
 
     $http.get(url).then(function(resp){

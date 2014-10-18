@@ -10,3 +10,11 @@
   max-height: 60px;
   margin: 0;
 }
+
+#editor h3 {
+  color: #CCC;
+}
+
+#editor h4 span.label {
+  margin-right: 10px;
+}
