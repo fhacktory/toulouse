@@ -8,7 +8,7 @@ home.controller('HomeCtrl', function($scope, $movies){
   $scope.movies = null;
   var show_movies = function(name){
     $movies.list(name).then(function(movies){
-      $scope.movies = movies;
+      $scope.movies = movies.results;
     });
   };
 

@@ -1,0 +1,12 @@
+<h1>{{movie.title}}</h1>
+<h4>
+  <span class="label label-info" ng-repeat="g in movie.genres">
+    {{ g.name }}
+  </span>
+</h4>
+<blockquote>
+  {{ movie.overview }}
+</blockquote>
+<pre>
+{{ movie|json  }}
+</pre>
