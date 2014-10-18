@@ -38,8 +38,13 @@ movies.service('$movies', function($http, $q){
 
   return {
 
-    // List all movies with a search filter
-    list : function(query){
+    // Get popular movies
+    popular : function(){
+      return rest(api_url + 'movie/popular');
+    },
+
+    // Search movies by name
+    search : function(query){
       return rest(api_url + 'search/movie', { query : query, });
     },
 
@@ -47,6 +52,8 @@ movies.service('$movies', function($http, $q){
     get : function(movie_id){
       return rest(api_url + 'movie/' + movie_id);
     },
+
+
   };
 
 
