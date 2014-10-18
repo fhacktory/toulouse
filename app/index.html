@@ -45,6 +45,9 @@
 
       <footer>
         <p class="pull-right" ng-show="status">
+          <span class="label label-success" ng-show="status.stats.cumulative.downloadedBytes">
+            {{ status.stats.cumulative.downloadedBytes / 1024 / 1024 / 1024  | number:0}} Gb downloaded
+          </span>
           <span class="label label-default" ng-show="status.freeSpace">
             {{ status.freeSpace / 1024 / 1024 / 1024  | number:0}} Gb available
           </span>
