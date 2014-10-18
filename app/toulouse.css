@@ -18,3 +18,14 @@
 #editor h4 span.label {
   margin-right: 10px;
 }
+
+div.cover a {
+  text-decoration: none;
+}
+div.cover {
+  text-align: center;
+}
+
+div.cover img {
+  margin: 0 auto;
+}

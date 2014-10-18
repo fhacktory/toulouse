@@ -20,11 +20,15 @@
     </div>
   </div>
 
-  <div class="col-sm-3 col-xs-12" ng-repeat="movie in movies">
+  <div class="col-sm-3 col-xs-12 cover" ng-repeat="movie in movies">
     <h4>{{ movie.title }}</h4>
-    <img class="img-responsive img-rounded" ng-src="{{ 'http://image.tmdb.org/t/p/w154/' + movie.poster_path }}" ng-show="movie.poster_path"/>
-    <a href="#/movie/{{ movie.id }}" class="btn btn-info">
-      View
+    <a href="#/movie/{{ movie.id }}" class="img-thumbnail">
+      <img class="img-responsive" ng-src="{{ 'http://image.tmdb.org/t/p/w154/' + movie.poster_path }}" ng-show="movie.poster_path"/>
     </a>
+    <p>
+      <a href="#/movie/{{ movie.id }}" class="btn btn-info">
+        Make a gif
+      </a>
+    </p>
   </div>
 </div>
