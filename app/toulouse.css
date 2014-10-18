@@ -11,6 +11,10 @@
   margin: 0;
 }
 
+.navbar .search {
+  margin-top: 10px;
+}
+
 #editor h3 {
   color: #CCC;
 }
@@ -19,11 +23,14 @@
   margin-right: 10px;
 }
 
-div.cover a {
-  text-decoration: none;
-}
 div.cover {
   text-align: center;
+  min-height: 370px;
+  margin-bottom: 20px;
+}
+
+div.cover a {
+  text-decoration: none;
 }
 
 div.cover img {

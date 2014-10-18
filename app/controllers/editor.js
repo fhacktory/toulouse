@@ -6,6 +6,9 @@ var editor = angular.module('toulouse.editor', [
 editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent){
   $scope.error = false;
 
+  // Show navbar search
+  $scope.$emit('show_search');
+
   // Load torrent info from imdb data
   var load_torrent = function(imdb_id){
     if(!imdb_id){

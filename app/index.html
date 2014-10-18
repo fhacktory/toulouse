@@ -12,7 +12,7 @@
     <link href="toulouse.css" rel="stylesheet" />
   </head>
 
-  <body>
+  <body ng-controller="MainCtrl">
 
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -26,6 +26,14 @@
           <a class="navbar-brand" href="#">
             <img class="logo" src="img/logo.png" alt="Chaton's pirate cat" />
           </a>
+        </div>
+        <div class="navbar-header pull-right">
+          <form class="form-inline search" role="form" ng-submit="search()" ng-show="search_enabled">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search a movie..." ng-model="search_terms">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
         </div>
       </div>
     </div>
@@ -46,6 +54,7 @@
     <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="services/movies.js"></script>
     <script src="services/torrent.js"></script>
+    <script src="controllers/main.js"></script>
     <script src="controllers/home.js"></script>
     <script src="controllers/editor.js"></script>
     <script src="app.js"></script>
