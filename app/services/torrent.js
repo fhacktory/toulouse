@@ -28,6 +28,11 @@ torrent.service('$torrent', function($http, $q){
     get_imdb : function(imdb_id){
       return request(api_url + '/movie/' + imdb_id);
     },
+
+    // Get the downloader status
+    status : function(){
+      return request(api_url + '/status');
+    }
   };
 
 });
