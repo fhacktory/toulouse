@@ -71,6 +71,16 @@ movies.service('$movies', function($http, $q){
     actors : function(movie_id){
       return rest(api_url + 'movie/' + movie_id + '/credits');
     },
+
+    // Get actor details
+    actor : function(actor_id){
+      return rest(api_url + 'person/' + actor_id);
+    },
+
+    // Get actor movies
+    actor_movies : function(actor_id){
+      return rest(api_url + 'person/' + actor_id + '/movie_credits');
+    },
   };
 
 

@@ -1,0 +1,31 @@
+<div class="row">
+
+  <div class="row header">
+    <div class="col-sm-2">
+      <img class="img-responsive img-rounded" ng-src="{{ 'http://image.tmdb.org/t/p/w185/' + actor.profile_path }}" />
+    </div>
+    <div class="col-sm-10">
+      <p class="actions pull-right">
+        <a ng-show="actor.imdb_id" href="http://www.imdb.com/title/{{ actor.imdb_id }}" class="btn btn-primary" target="_blank">View on Imdb</a>
+      </p>
+      <h1>{{actor.name}}</h1>
+      <blockquote>
+        {{ actor.biography }}
+      </blockquote>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3 col-xs-12 cover" ng-repeat="movie in movies">
+    <h4>{{ movie.title }}</h4>
+    <a href="#/movie/{{ movie.id }}" class="img-thumbnail">
+      <img class="img-responsive" ng-src="{{ 'http://image.tmdb.org/t/p/w154/' + movie.poster_path }}" ng-show="movie.poster_path"/>
+    </a>
+    <p>
+      <a href="#/movie/{{ movie.id }}" class="btn btn-info">
+        Make a gif
+      </a>
+    </p>
+  </div>
+</div>

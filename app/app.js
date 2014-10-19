@@ -6,6 +6,7 @@ var toulouse = angular.module('toulouse', [
   'humanSeconds',
   'toulouse.main',
   'toulouse.home',
+  'toulouse.actor',
   'toulouse.editor',
 ]);
 
@@ -27,6 +28,10 @@ toulouse.config(function($routeProvider, $sceProvider ){
     .when('/movie/:movie_id', {
       templateUrl : 'templates/editor.html',
       controller : 'EditorCtrl',
+    })
+    .when('/actor/:actor_id', {
+      templateUrl : 'templates/actor.html',
+      controller : 'ActorCtrl',
     })
     .otherwise({
       redirectTo : '/',
