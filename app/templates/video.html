@@ -43,5 +43,9 @@
     </div>
   </div>
 
+  <div class="col-xs-12 text-right" ng-repeat="capture in archives">
+    <a href="{{ capture.url }}" target="_blank" class="btn btn-info">Capture de {{ capture.start | nice_seconds }} à {{ capture.end | nice_seconds }}</a>
+  </div>
+
   <hr />
 </div>

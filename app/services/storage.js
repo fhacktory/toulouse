@@ -12,17 +12,17 @@ storage.service('$storage', function(localStorageService){
         start : start,
         end : end,
         url : url,
-        added : new Date(),
+        added : new Date().getTime(),
       });
     },
 
     // List all captures in browser storage
     list : function(){
       var keys = localStorageService.keys();
-      var out = {};
+      var out = [];
 
       angular.forEach(keys, function(key){
-        out[key] = localStorageService.get(key);
+        out.push(localStorageService.get(key));
       });
       return out;
     },

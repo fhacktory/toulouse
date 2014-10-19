@@ -115,6 +115,7 @@ editor.directive('editorVideo', function($torrent, $window, $storage){
       var video = element.find('video');
       var pictures = element.find('pictures');
       scope.capture = null;
+      scope.archives = [];
 
       // Setup url when received from controller
       scope.$watch('mp4url', function(newValue, oldValue){
@@ -212,8 +213,17 @@ editor.directive('editorVideo', function($torrent, $window, $storage){
             // save in storage
             $storage.add(scope.torrent.movie, scope.capture.start, scope.capture.end, gif_url);
 
+            // add in archive
+            scope.archives.splice(0, 0, {
+              start : scope.capture.start,
+              end : scope.capture.end,
+              url : gif_url,
+            });
+
             // Reset playback
             scope.capture = null;
+
+            // Show link to capture
           }, function(err){
             console.error("Failed to make a gif : "+err);
             // Reset capture

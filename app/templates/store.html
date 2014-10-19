@@ -5,7 +5,7 @@
   You don't have any capture saved yet.
 </div>
 
-<div class="row" ng-repeat="capture in captures | orderBy : added">
+<div class="row" ng-repeat="capture in captures | orderBy:capture.added">
   <div class="col-xs-2">
     <img class="img-responsive img-rounded" ng-src="{{ 'http://image.tmdb.org/t/p/w185/' + capture.movie.poster_path }}" />
   </div>
@@ -19,7 +19,7 @@
       From {{ capture.start | nice_seconds }} &bull; Duration {{ capture.end - capture.start | nice_seconds }}
     </p>
     <p>
-      Added {{ capture.added | date }}
+      Added {{ capture.added | date:'dd/MM/yy hh:mm:ss' }}
     </p>
   </div>
   <div class="col-xs-6">
