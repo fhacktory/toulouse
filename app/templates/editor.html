@@ -20,9 +20,15 @@
     </div>
   </div>
 
-  <div class="alert alert-warning" ng-hide="torrent" ng-hide="error">
+  <div class="alert alert-warning" ng-hide="torrent || error || ask_creation">
     <h4>Awaiting informations</h4>
     Hang on...
+  </div>
+
+  <div class="alert alert-success" ng-show="ask_creation" ng-hide="torrent">
+    <span class="pull-right btn btn-primary" ng-click="start_download()">Start !</span>
+    <h4>Start a download ?</h4>
+    This movie is available to download.
   </div>
 
   <div class="alert alert-danger" ng-show="error">

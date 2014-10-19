@@ -25,8 +25,9 @@ torrent.service('$torrent', function($http, $q){
   return {
 
     // Get the status of an Imdb movie
-    get_imdb : function(imdb_id){
-      return request(api_url + '/movie/' + imdb_id);
+    get_imdb : function(imdb_id, create){
+      var suffix = create ? '/1' : '';
+      return request(api_url + '/movie/' + imdb_id + suffix);
     },
 
     get_stream : function(imdb_id){

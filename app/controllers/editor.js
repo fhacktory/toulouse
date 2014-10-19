@@ -5,17 +5,32 @@ var editor = angular.module('toulouse.editor', [
 
 editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent){
   $scope.error = false;
+  $scope.ask_creation = false;
 
   // Show navbar search
   $scope.$emit('show_search');
 
+  // Start a download
+  $scope.start_download = function(){
+    if(!$scope.movie || $scope.torrent)
+      return;
+    load_torrent($scope.movie.imdb_id, true);
+  };
+
   // Load torrent info from imdb data
-  var load_torrent = function(imdb_id){
+  var load_torrent = function(imdb_id, create){
     if(!imdb_id){
       $scope.error = true;
       return;
     }
-    $torrent.get_imdb(imdb_id).then(function(torrent){
+    $torrent.get_imdb(imdb_id, create).then(function(torrent){
+
+      // Ask for creation when empty
+      if(!torrent['movies'].length){
+        $scope.ask_creation = true;
+        return;
+      }
+
       $scope.torrent = torrent['movies'][0]; // dirty
 
       // Broadcast new torrent
@@ -24,7 +39,7 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
       // In 2s, update data, when not cached
       if($scope.torrent.status != 'cached'){
         setTimeout(function(){
-          load_torrent(imdb_id);
+          load_torrent(imdb_id, false);
         }, 2000);
       }
     }, function(error){
@@ -39,7 +54,7 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
     $scope.movie = movie;
 
     // Get torrent status
-    load_torrent(movie.imdb_id);
+    load_torrent(movie.imdb_id, false);
   }, function(error){
     $scope.error = true; // don't give a shit about message
   });
@@ -70,7 +85,7 @@ editor.controller('SandwichCtrl', function($scope, $torrent){
     $scope.torrent = torrent;
 
     // Load stream url
-    if(!$scope.mp4url){
+    if(!$scope.mp4url && torrent.status == 'cached'){
       $torrent.get_stream(torrent.imdbId).then(function(stream){
         $scope.mp4url = stream['movies'][0]['stream'];
       });
