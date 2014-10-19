@@ -39,6 +39,7 @@ movies.service('$movies', function($http, $q){
       if(resp.data.results && resp.data.total_results == 0)
         return deferred.reject(resp);
 
+      // Send back received data
       return deferred.resolve(resp.data);
     });
     return deferred.promise;

@@ -30,7 +30,7 @@
     There is no video source available for this movie
   </div>
 
-  <div class="row" ng-show="torrent">
+  <div class="row torrent" ng-show="torrent">
 
     <div class="alert alert-info" ng-show="torrent.status=='not_cached'">
       <h4>New movie !</h4>
@@ -63,12 +63,10 @@
       <h4>Cached movie</h4>
       The movie is now available !
     </div>
-
-    <pre>{{ torrent | json }}</pre>
   </div>
 
   <div class="row">
-    <video />
+    <div editor-video conf="video"/>
   </div>
 
   <div class="row" ng-show="similars">

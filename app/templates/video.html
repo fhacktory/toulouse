@@ -1,5 +1,20 @@
 <div id="video">
-  <video width="{{ conf.width }}" height="{{ conf.height }}" autoplay="autoplay" muted="muted">
-    <source type="video/mp4" ng-src="{{ conf.mp4_url }}"></source>
-  </video>
+  <div class="col-xs-12">
+    <video width="{{ conf.width }}" autoplay="autoplay" muted="muted">
+      <source type="video/mp4" ng-src="{{ conf.mp4_url }}"></source>
+    </video>
+  </div>
+
+
+  <div class="col-xs-2 text-center">
+    {{ time | nice_seconds }} / {{ duration | nice_seconds }}
+  </div>
+
+  <div class="col-xs-10">
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="{{ percent | number:0 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent | number:0 }}%;">
+      </div>
+    </div>
+  </div>
+
 </div>

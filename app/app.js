@@ -9,7 +9,10 @@ var toulouse = angular.module('toulouse', [
   'toulouse.editor',
 ]);
 
-toulouse.config(function($routeProvider){
+toulouse.config(function($routeProvider, $sceProvider ){
+
+  // For dev only, disable inclusion security
+  $sceProvider.enabled(false);
 
   // Url Config
   $routeProvider
