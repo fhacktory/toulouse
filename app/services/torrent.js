@@ -24,6 +24,10 @@ torrent.service('$torrent', function($http, $q){
 
   return {
 
+    downloads : function(){
+      return request(api_url + '/movie/list');
+    },
+
     // Get the status of an Imdb movie
     get_imdb : function(imdb_id, create){
       var suffix = create ? '/1' : '';
@@ -46,8 +50,8 @@ torrent.service('$torrent', function($http, $q){
     },
 
     // Make a gif from a movie
-    make_gif : function(imdb_id, start, end){
-      return request(api_url + '/movie/gif/' + imdb_id + '/' + start + '/' + end);
+    make_gif : function(imdb_id, start, end){$
+      return request(api_url + '/movie/gif/' + imdb_id + '/' + start + '/' + end + '/medium');
     },
 
     // Get the downloader status

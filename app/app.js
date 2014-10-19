@@ -7,6 +7,7 @@ var toulouse = angular.module('toulouse', [
   'toulouse.main',
   'toulouse.home',
   'toulouse.actor',
+  'toulouse.downloads',
   'toulouse.editor',
 ]);
 
@@ -20,6 +21,10 @@ toulouse.config(function($routeProvider, $sceProvider ){
     .when('/search/:search_term', {
       templateUrl : 'templates/home.html',
       controller : 'HomeCtrl',
+    })
+    .when('/downloads', {
+      templateUrl : 'templates/downloads.html',
+      controller : 'DownloadsCtrl',
     })
     .when('/', {
       templateUrl : 'templates/home.html',

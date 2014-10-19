@@ -1,0 +1,40 @@
+<h1>Downloads</h1>
+
+<div class="alert alert-info" ng-hide="downloads">
+  <h4>No downloads</h4>
+  There are no downloads available.
+</div>
+
+<table class="table table-responsive table-striped" ng-show="downloads">
+  <tr>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Progress</th>
+  </tr>
+  <tr ng-repeat="movie in downloads">
+    <td>{{ movie.title }}</td>
+    <td ng-show="movie.status == 'not_cached'">
+      <span class="label label-info">New !</span>
+    </td>
+    <td ng-show="movie.status == 'downloading'">
+      <span class="label label-warning">Downloading</span>
+    </td>
+    <td ng-show="movie.status == 'pending_processing'">
+      <span class="label label-warning">Pending Processing</span>
+    </td>
+    <td ng-show="movie.status == 'processing'">
+      <span class="label label-warning">Processing</span>
+    </td>
+    <td ng-show="movie.status == 'cached'">
+      <span class="label label-success">In cache !</span>
+    </td>
+    <td ng-hide="movie.progress">-</td>
+    <td ng-show="movie.progress">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ movie.progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ movie.progress }}%;">
+          <span class="sr-only">{{ movie.progress }}% Complete</span>
+        </div>
+      </div>
+    </td>
+  </tr>
+</table>
