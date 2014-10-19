@@ -18,6 +18,9 @@
   </div>
 
   <div class="time" ng-show="capture">
+    <div class="col-xs-12 form-group">
+      <input class="form-control" placeholder="Add a text on the Gif..." ng-model="capture_text"/>
+    </div>
     <div class="col-xs-4 text-center big">
       Started capture at {{ capture.start | nice_seconds }}
     </div>
@@ -40,7 +43,5 @@
     </div>
   </div>
 
-  <div class="col-xs-12 pictures">
-  </div>
-
+  <hr />
 </div>

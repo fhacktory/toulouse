@@ -50,8 +50,9 @@ torrent.service('$torrent', function($http, $q){
     },
 
     // Make a gif from a movie
-    make_gif : function(imdb_id, start, end){$
-      return request(api_url + '/movie/gif/' + imdb_id + '/' + start + '/' + end + '/low');
+    make_gif : function(imdb_id, start, end, text){$
+      text = text || '';
+      return request(api_url + '/movie/gif/' + imdb_id + '/' + start + '/' + end + '/low/' + text);
     },
 
     // Get the downloader status

@@ -184,12 +184,12 @@ editor.directive('editorVideo', function($torrent, $window){
 
         if(scope.capture){
           // Stop capture
-          scope.capture['end'] = video[0].currentTime;
+          scope.capture['end'] = Math.ceil(video[0].currentTime);
           scope.capture['validated'] = false;
         }else{
           // Start capture
           scope.capture = {
-            start : video[0].currentTime,
+            start : Math.floor(video[0].currentTime),
           };
         }
       });
@@ -200,13 +200,17 @@ editor.directive('editorVideo', function($torrent, $window){
           scope.capture.validated = true;
 
           // Send to torrent api
-          $torrent.make_gif(scope.torrent.imdbId, scope.capture.start, scope.capture.end).then(function(gif){
+          $torrent.make_gif(scope.torrent.imdbId, scope.capture.start, scope.capture.end, scope.capture_text).then(function(gif){
 
             // Open url in _blank
             var gif_url = gif.movies[0].gif;
             $window.open(gif_url);
 
             // Reset playback
+            scope.capture = null;
+          }, function(err){
+            console.error("Failed to make a gif : "+err);
+            // Reset capture
             scope.capture = null;
           });
         }else{
