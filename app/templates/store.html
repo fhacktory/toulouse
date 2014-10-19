@@ -1,0 +1,32 @@
+<h1>Your captures</h1>
+
+<div class="alert alert-info" ng-hide="captures">
+  <h4>No captures</h4>
+  You don't have any capture saved yet.
+</div>
+
+<div class="row" ng-repeat="capture in captures | orderBy : added">
+  <div class="col-xs-2">
+    <img class="img-responsive img-rounded" ng-src="{{ 'http://image.tmdb.org/t/p/w185/' + capture.movie.poster_path }}" />
+  </div>
+  <div class="col-xs-4">
+    <h4>
+      <a href="#/movie/{{ capture.movie.id }}">
+        {{ capture.movie.title }}
+      </a>
+    </h4>
+    <p>
+      From {{ capture.start | nice_seconds }} &bull; Duration {{ capture.end - capture.start | nice_seconds }}
+    </p>
+    <p>
+      Added {{ capture.added | date }}
+    </p>
+  </div>
+  <div class="col-xs-6">
+    <a href="{{ capture.url }}" target="_blank">
+      <video width="100%" autoplay="autoplay" loop="loop">
+        <source type="video/webm" src="{{ capture.url }}" />
+      </video>
+    </a>
+  </div>
+</div>

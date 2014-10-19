@@ -35,6 +35,9 @@
             <li>
               <a href="#/downloads">Downloads</a>
             </li>
+            <li>
+              <a href="#/store">Your captures</a>
+            </li>
           </ul>
           <form class="navbar-form navbar-right search" role="form" ng-submit="search()" ng-show="search_enabled">
             <div class="form-group">
@@ -66,13 +69,16 @@
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
     <script src="bower_components/angular-humanSeconds/angular-humanSeconds.min.js"></script>
     <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="services/storage.js"></script>
     <script src="services/movies.js"></script>
     <script src="services/torrent.js"></script>
     <script src="controllers/main.js"></script>
     <script src="controllers/home.js"></script>
+    <script src="controllers/store.js"></script>
     <script src="controllers/downloads.js"></script>
     <script src="controllers/actor.js"></script>
     <script src="controllers/editor.js"></script>

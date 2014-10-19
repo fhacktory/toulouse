@@ -1,6 +1,7 @@
 var editor = angular.module('toulouse.editor', [
   'toulouse.movies',
   'toulouse.torrent',
+  'toulouse.storage',
 ]);
 
 editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent){
@@ -34,6 +35,7 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
       $scope.torrent = torrent['movies'][0]; // dirty
 
       // Broadcast new torrent
+      $scope.torrent.movie = $scope.movie;
       $scope.$broadcast('new_torrent', $scope.torrent);
 
       // In 2s, update data, when not cached
@@ -46,6 +48,12 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
       $scope.error = true; // don't give a shit about message
     });
   };
+
+  // Setup empty video editor
+  $scope.video = {
+    width : '100%',
+  };
+  $scope.mp4url = null; // no url yet
 
   // Load a movie
   $scope.movie = null;
@@ -70,21 +78,15 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
   $movies.actors($routeParams.movie_id).then(function(peoples){
     $scope.actors = peoples.cast;
   });
-
-
-  // Setup empty video editor
-  $scope.video = {
-    width : '100%',
-  };
-  $scope.mp4url = null; // no url yet
 });
 
 
 // Controller between editor & video
 // to avoid double instanciation of EditorCtrl
-editor.controller('SandwichCtrl', function($scope, $torrent){
+editor.controller('SandwichCtrl', function($scope, $torrent, $storage){
 
   $scope.torrent = null;
+  $scope.movie = null;
   $scope.mp4url = null;
   $scope.$on('new_torrent', function(scope, torrent){
 
@@ -101,7 +103,7 @@ editor.controller('SandwichCtrl', function($scope, $torrent){
 });
 
 // Our own video player
-editor.directive('editorVideo', function($torrent, $window){
+editor.directive('editorVideo', function($torrent, $window, $storage){
   return {
     restrict : 'AE', // Must be an attribute or element
     replace : 'true',
@@ -184,12 +186,12 @@ editor.directive('editorVideo', function($torrent, $window){
 
         if(scope.capture){
           // Stop capture
-          scope.capture['end'] = video[0].currentTime;
+          scope.capture['end'] = Math.ceil(video[0].currentTime);
           scope.capture['validated'] = false;
         }else{
           // Start capture
           scope.capture = {
-            start : video[0].currentTime,
+            start : Math.floor(video[0].currentTime),
           };
         }
       });
@@ -200,13 +202,20 @@ editor.directive('editorVideo', function($torrent, $window){
           scope.capture.validated = true;
 
           // Send to torrent api
-          $torrent.make_gif(scope.torrent.imdbId, scope.capture.start, scope.capture.end).then(function(gif){
+          $torrent.make_gif(scope.torrent.imdbId, scope.capture.start, scope.capture.end, scope.capture_text).then(function(gif){
 
             // Open url in _blank
             var gif_url = gif.movies[0].gif;
-            $window.open(gif_url);
+            //$window.open(gif_url);
+
+            // save in storage
+            $storage.add(scope.torrent.movie, scope.capture.start, scope.capture.end, gif_url);
 
             // Reset playback
+            scope.capture = null;
+          }, function(err){
+            console.error("Failed to make a gif : "+err);
+            // Reset capture
             scope.capture = null;
           });
         }else{
