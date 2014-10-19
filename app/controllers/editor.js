@@ -33,6 +33,9 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
   $movies.get($routeParams.movie_id).then(function(movie){
     $scope.movie = movie;
 
+    // Apply settins to video
+    $scope.mp4url = 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4';
+
     // Get torrent status
     load_torrent(movie.imdb_id);
   }, function(error){
@@ -45,24 +48,39 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
     $scope.similars = similars.results;
   });
 
-  // Setup video editor
+  // Setup empty video editor
   $scope.video = {
-    mp4_url: 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4',
     width : '100%',
   };
+  $scope.mp4url = null; // no url yet
 });
 
 // Our own video player
-editor.directive('editorVideo', function(){
+editor.directive('editorVideo', function($torrent){
   return {
     restrict : 'AE', // Must be an attribute or element
     replace : 'true',
+    controller : 'EditorCtrl',
 
     // Here we manipulate the dom
-    link : function (scope, element, attrs){
-
+    link : function (scope, element, attrs, ctrl){
       var progress = element.find('div.progress');
       var video = element.find('video');
+      var pictures = element.find('pictures');
+
+      // Setup url when received from controller
+      scope.$watch('mp4url', function(newValue, oldValue){
+        if(!newValue || newValue == oldValue)
+          return;
+
+        // Update video url and play
+        video.append(angular.element('<source/>', {
+          type : 'video/mp4',
+          src : newValue,
+        }));
+        video = video[0] || video; // don't ask.
+        video.play();
+      });
 
       // Get initial duration
       video.on('loadedmetadata', function(evt){
@@ -100,6 +118,9 @@ editor.directive('editorVideo', function(){
         if(video.paused)
           video.play();
 
+        // Load images for timestamp
+        var pictures = $torrent.get_pictures(scope.movie.imdb_id, time);
+        console.log(pictures);
       });
 
     },

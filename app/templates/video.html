@@ -1,7 +1,6 @@
 <div id="video">
   <div class="col-xs-12">
-    <video width="{{ conf.width }}" autoplay="autoplay" muted="muted">
-      <source type="video/mp4" ng-src="{{ conf.mp4_url }}"></source>
+    <video ng-cloak ng-show="mp4url" width="{{ conf.width }}" autoplay="autoplay" muted="muted">
     </video>
   </div>
 
@@ -14,6 +13,9 @@
       <div class="progress-bar" role="progressbar" aria-valuenow="{{ percent | number:0 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent | number:0 }}%;">
       </div>
     </div>
+  </div>
+
+  <div class="col-xs-12 pictures">
   </div>
 
 </div>
