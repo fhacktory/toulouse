@@ -29,6 +29,10 @@ torrent.service('$torrent', function($http, $q){
       return request(api_url + '/movie/' + imdb_id);
     },
 
+    get_stream : function(imdb_id){
+      return request(api_url + '/movie/stream/' + imdb_id);
+    },
+
     // Get a movie's pictures after a timestamp
     get_pictures : function(imdb_id, timestamp){
 

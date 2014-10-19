@@ -18,6 +18,11 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
     $torrent.get_imdb(imdb_id).then(function(torrent){
       $scope.torrent = torrent['movies'][0]; // dirty
 
+      // Load stream url
+      $torrent.get_stream(imdb_id).then(function(stream){
+        $scope.mp4url = stream['movies'][0]['stream'];
+      });
+
       // In 2s, update data
       setTimeout(function(){
         load_torrent(imdb_id);
@@ -34,7 +39,6 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
     $scope.movie = movie;
 
     // Apply settins to video
-    $scope.mp4url = 'http://clips.vorwaerts-gmbh.de/VfE_html5.mp4';
 
     // Get torrent status
     load_torrent(movie.imdb_id);
