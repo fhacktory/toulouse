@@ -18,15 +18,15 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
     $torrent.get_imdb(imdb_id).then(function(torrent){
       $scope.torrent = torrent['movies'][0]; // dirty
 
-      // Load stream url
-      $torrent.get_stream(imdb_id).then(function(stream){
-        $scope.mp4url = stream['movies'][0]['stream'];
-      });
+      // Broadcast new torrent
+      $scope.$broadcast('new_torrent', $scope.torrent);
 
-      // In 2s, update data
-      setTimeout(function(){
-        load_torrent(imdb_id);
-      }, 2000);
+      // In 2s, update data, when not cached
+      if($scope.torrent.status != 'cached'){
+        setTimeout(function(){
+          load_torrent(imdb_id);
+        }, 2000);
+      }
     }, function(error){
       $scope.error = true; // don't give a shit about message
     });
@@ -37,8 +37,6 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
   $scope.torrent = null;
   $movies.get($routeParams.movie_id).then(function(movie){
     $scope.movie = movie;
-
-    // Apply settins to video
 
     // Get torrent status
     load_torrent(movie.imdb_id);
@@ -59,12 +57,33 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
   $scope.mp4url = null; // no url yet
 });
 
+
+// Controller between editor & video
+// to avoid double instanciation of EditorCtrl
+editor.controller('SandwichCtrl', function($scope, $torrent){
+
+  $scope.torrent = null;
+  $scope.mp4url = null;
+  $scope.$on('new_torrent', function(scope, torrent){
+
+    // Save torrent
+    $scope.torrent = torrent;
+
+    // Load stream url
+    if(!$scope.mp4url){
+      $torrent.get_stream(torrent.imdbId).then(function(stream){
+        $scope.mp4url = stream['movies'][0]['stream'];
+      });
+    }
+  });
+});
+
 // Our own video player
 editor.directive('editorVideo', function($torrent){
   return {
     restrict : 'AE', // Must be an attribute or element
     replace : 'true',
-    controller : 'EditorCtrl',
+    controller : 'SandwichCtrl',
 
     // Here we manipulate the dom
     link : function (scope, element, attrs, ctrl){
@@ -74,7 +93,7 @@ editor.directive('editorVideo', function($torrent){
 
       // Setup url when received from controller
       scope.$watch('mp4url', function(newValue, oldValue){
-        if(!newValue || newValue == oldValue)
+        if(!newValue || oldValue) // update only once
           return;
 
         // Update video url and play
@@ -124,7 +143,9 @@ editor.directive('editorVideo', function($torrent){
 
         // Load images for timestamp
         var pictures = $torrent.get_pictures(scope.movie.imdb_id, time);
-        console.log(pictures);
+        angular.forEach(pictures, function(picture_url){
+          console.log(picture_url);
+        });
       });
 
     },
