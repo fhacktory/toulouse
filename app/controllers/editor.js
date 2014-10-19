@@ -101,7 +101,7 @@ editor.controller('SandwichCtrl', function($scope, $torrent){
 });
 
 // Our own video player
-editor.directive('editorVideo', function($torrent){
+editor.directive('editorVideo', function($torrent, $window){
   return {
     restrict : 'AE', // Must be an attribute or element
     replace : 'true',
@@ -201,7 +201,13 @@ editor.directive('editorVideo', function($torrent){
 
           // Send to torrent api
           $torrent.make_gif(scope.torrent.imdbId, scope.capture.start, scope.capture.end).then(function(gif){
-            // TODO
+
+            // Open url in _blank
+            var gif_url = gif.movies[0].gif;
+            $window.open(gif_url);
+
+            // Reset playback
+            scope.capture = null;
           });
         }else{
           // Reset capture
