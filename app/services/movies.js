@@ -67,6 +67,10 @@ movies.service('$movies', function($http, $q){
       return rest(api_url + 'movie/' + movie_id + '/similar');
     },
 
+    // List actors
+    actors : function(movie_id){
+      return rest(api_url + 'movie/' + movie_id + '/credits');
+    },
   };
 
 

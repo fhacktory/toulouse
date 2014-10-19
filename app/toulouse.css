@@ -46,3 +46,16 @@ div.cover a {
 div.cover img {
   margin: 0 auto;
 }
+
+div.actor a.img-circle {
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background-position: center center;
+  background-size: cover;
+}
+
+div.actor {
+  margin-bottom: 20px;
+}

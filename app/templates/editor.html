@@ -69,11 +69,20 @@
     </div>
   </div>
 
+  <div class="row" ng-show="actors">
+    <div class="col-xs-12">
+      <h3>Actors</h3>
+      <div class="col-sm-2 text-center actor" ng-repeat="actor in actors" ng-show="actor.order < 4">
+        <a href="#/actor/{{ actor.id }}" class="img-circle" style="background-image: url('{{ 'http://image.tmdb.org/t/p/w185/' + actor.profile_path }}');" ></a>
+        <a href="#/actor/{{ actor.id }}">{{ actor.name }}</a>
+      </div>
+    </div>
+  </div>
   <div class="row" ng-show="similars">
     <div class="col-xs-12">
       <h3>Similar movies</h3>
       <div class="col-sm-4" ng-repeat="movie in similars">
-        <a href="#/movie/{{ movie.id }}">{{ movie.title }}</h4>
+        <a href="#/movie/{{ movie.id }}">{{ movie.title }}</a>
       </div>
     </div>
   </div>

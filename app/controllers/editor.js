@@ -65,6 +65,13 @@ editor.controller('EditorCtrl', function($routeParams, $scope, $movies, $torrent
     $scope.similars = similars.results;
   });
 
+  // Load actors
+  $scope.actors = null;
+  $movies.actors($routeParams.movie_id).then(function(peoples){
+    $scope.actors = peoples.cast;
+  });
+
+
   // Setup empty video editor
   $scope.video = {
     width : '100%',
