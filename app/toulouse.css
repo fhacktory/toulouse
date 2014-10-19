@@ -33,6 +33,15 @@
   cursor: pointer;
 }
 
+#video video {
+  cursor: crosshair;
+  outline: 0;
+}
+
+.big {
+  font-size: 20px;
+}
+
 div.cover {
   text-align: center;
   min-height: 370px;

@@ -4,14 +4,39 @@
     </video>
   </div>
 
-  <div class="col-xs-2 text-center">
-    {{ time | nice_seconds }} / {{ duration | nice_seconds }}
+  <div class="time" ng-hide="capture">
+    <div class="col-xs-2 text-center">
+      {{ time | nice_seconds }} / {{ duration | nice_seconds }}
+    </div>
+
+    <div class="col-xs-10">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ percent | number:0 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent | number:0 }}%;">
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="col-xs-10">
-    <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="{{ percent | number:0 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent | number:0 }}%;">
-      </div>
+  <div class="time" ng-show="capture">
+    <div class="col-xs-4 text-center big">
+      Started capture at {{ capture.start | nice_seconds }}
+    </div>
+    <div class="col-xs-4 text-center big text-info" ng-hide="capture.end">
+      Running since {{ time - capture.start | nice_seconds }}
+    </div>
+    <div class="col-xs-4 text-center big" ng-show="capture.end">
+      Duration {{ capture.end - capture.start | nice_seconds }}
+    </div>
+    <div class="col-xs-4 text-right" ng-show="capture.end && !capture.validated">
+      <span class="btn btn-success" ng-click="validate(true)">
+        Validate
+      </span>
+      <span class="btn btn-danger" ng-click="validate(false)">
+        Cancel
+      </span>
+    </div>
+    <div class="col-xs-4 text-center big" ng-show="capture.validated">
+      Building GIF ...
     </div>
   </div>
 

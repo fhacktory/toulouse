@@ -112,6 +112,7 @@ editor.directive('editorVideo', function($torrent){
       var progress = element.find('div.progress');
       var video = element.find('video');
       var pictures = element.find('pictures');
+      scope.capture = null;
 
       // Setup url when received from controller
       scope.$watch('mp4url', function(newValue, oldValue){
@@ -123,8 +124,8 @@ editor.directive('editorVideo', function($torrent){
           type : 'video/mp4',
           src : newValue,
         }));
-        video = video[0] || video; // don't ask.
-        video.play();
+        var v = video[0] || video; // don't ask.
+        v.play();
       });
 
       // Get initial duration
@@ -136,8 +137,8 @@ editor.directive('editorVideo', function($torrent){
       });
 
       video.on('timeupdate', function(evt){
-        // Update duration
         scope.$apply(function(s){
+          // Update duration
           scope.time = evt.target.currentTime;
           if(scope.duration > 0)
             scope.percent = 100.0 * scope.time / scope.duration;
@@ -146,6 +147,10 @@ editor.directive('editorVideo', function($torrent){
 
       // On progress click, seek
       progress.on('click', function(evt){
+        if(scope.capture){
+          console.warn('No seek on capture');
+          return;
+        }
 
         // Calc percent of click
         var parentOffset = $(this).parent().offset();
@@ -156,19 +161,53 @@ editor.directive('editorVideo', function($torrent){
         var time = Math.floor(scope.duration * percent);
 
         // Seek video
-        video = video[0] || video; // don't ask.
-        video.currentTime = time;
+        var v = video[0] || video; // don't ask.
+        v.currentTime = time;
 
         // Always play on seek
-        if(video.paused)
-          video.play();
+        if(v.paused)
+          v.play();
 
         // Load images for timestamp
+/*
         var pictures = $torrent.get_pictures(scope.movie.imdb_id, time);
         angular.forEach(pictures, function(picture_url){
           console.log(picture_url);
         });
+*/
       });
+
+      // Start stop capture on movie click
+      video.on('click', function(evt){
+        if(scope.capture && scope.capture.end)
+          return;
+
+        if(scope.capture){
+          // Stop capture
+          scope.capture['end'] = video[0].currentTime;
+          scope.capture['validated'] = false;
+        }else{
+          // Start capture
+          scope.capture = {
+            start : video[0].currentTime,
+          };
+        }
+      });
+
+      // Validate current capture
+      scope.validate = function(use){
+        if(use){
+          scope.capture.validated = true;
+
+          // Send to torrent api
+          $torrent.make_gif(scope.torrent.imdbId, scope.capture.start, scope.capture.end).then(function(gif){
+            // TODO
+          });
+        }else{
+          // Reset capture
+          scope.capture = null;
+        }
+      };
 
     },
 
