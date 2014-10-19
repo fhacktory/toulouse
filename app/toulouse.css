@@ -29,6 +29,8 @@
 
 #video .progress {
   margin-top: 6px;
+  height: 10px;
+  cursor: pointer;
 }
 
 div.cover {

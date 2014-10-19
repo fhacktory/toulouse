@@ -61,8 +61,8 @@ editor.directive('editorVideo', function(){
     // Here we manipulate the dom
     link : function (scope, element, attrs){
 
+      var progress = element.find('div.progress');
       var video = element.find('video');
-      var progress = element.find('.progress-bar');
 
       // Get initial duration
       video.on('loadedmetadata', function(evt){
@@ -81,6 +81,27 @@ editor.directive('editorVideo', function(){
         });
       });
 
+      // On progress click, seek
+      progress.on('click', function(evt){
+
+        // Calc percent of click
+        var parentOffset = $(this).parent().offset();
+        var w = $(this).width();
+        var percent = (evt.pageX - parentOffset.left) / w;
+
+        // Calc new time of video
+        var time = Math.floor(scope.duration * percent);
+
+        // Seek video
+        video = video[0] || video; // don't ask.
+        video.currentTime = time;
+
+        // Always play on seek
+        if(video.paused)
+          video.play();
+
+      });
+
     },
 
     // Use conf from scope through element
@@ -91,6 +112,7 @@ editor.directive('editorVideo', function(){
   };
 });
 
+// Display nicely seconds
 editor.filter('nice_seconds', function(){
   return function(seconds){
     if (seconds === Infinity) {

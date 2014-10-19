@@ -29,6 +29,18 @@ torrent.service('$torrent', function($http, $q){
       return request(api_url + '/movie/' + imdb_id);
     },
 
+
+    // Get a movie's pictures after a timestamp
+    get_pictures : function(imdb_id, timestamp){
+
+      // For dev give cats
+      var out = []
+      for(var i = 0; i < 12; i++){
+        out.append('http://lorempixel.com/400/200/cats/1/Chaton-'+i);
+      }
+      return out;
+    },
+
     // Get the downloader status
     status : function(){
       return request(api_url + '/status');
