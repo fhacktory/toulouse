@@ -1,10 +1,10 @@
 <div id="editor" ng-cloak ng-show="movie">
   <div class="row header">
-    <div class="col-sm-2">
+    <div class="col-xs-2">
       <img class="img-responsive img-rounded" ng-src="{{ 'http://image.tmdb.org/t/p/w185/' + movie.poster_path }}" />
     </div>
-    <div class="col-sm-10">
-      <p class="actions pull-right">
+    <div class="col-xs-10">
+      <p class="actions pull-right hidden-xs">
         <a ng-show="movie.imdb_id" href="http://www.imdb.com/title/{{ movie.imdb_id }}" class="btn btn-primary" target="_blank">View on Imdb</a>
       </p>
       <h1>{{movie.title}}</h1>
@@ -14,7 +14,7 @@
           {{ g.name }}
         </span>
       </h4>
-      <blockquote>
+      <blockquote class="hidden-xs">
         {{ movie.overview }}
       </blockquote>
     </div>
@@ -72,7 +72,7 @@
   <div class="row" ng-show="actors">
     <div class="col-xs-12">
       <h3>Actors</h3>
-      <div class="col-sm-2 text-center actor" ng-repeat="actor in actors" ng-show="actor.order < 4">
+      <div class="col-sm-2 col-xs-3 text-center actor" ng-repeat="actor in actors" ng-show="actor.order < 4">
         <a href="#/actor/{{ actor.id }}" class="img-circle" style="background-image: url('{{ 'http://image.tmdb.org/t/p/w185/' + actor.profile_path }}');" ></a>
         <a href="#/actor/{{ actor.id }}">{{ actor.name }}</a>
       </div>
@@ -81,7 +81,7 @@
   <div class="row" ng-show="similars">
     <div class="col-xs-12">
       <h3>Similar movies</h3>
-      <div class="col-sm-4" ng-repeat="movie in similars">
+      <div class="col-sm-4 col-xs-6" ng-repeat="movie in similars">
         <a href="#/movie/{{ movie.id }}">{{ movie.title }}</a>
       </div>
     </div>

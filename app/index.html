@@ -27,8 +27,16 @@
             <img class="logo" src="img/logo.png" alt="Chaton's pirate cat" />
           </a>
         </div>
-        <div class="navbar-header pull-right">
-          <form class="form-inline search" role="form" ng-submit="search()" ng-show="search_enabled">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="#/">Popular</a>
+            </li>
+            <li>
+              <a href="#/downloads">Downloads</a>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right search" role="form" ng-submit="search()" ng-show="search_enabled">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Search a movie..." ng-model="search_terms">
             </div>
