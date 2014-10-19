@@ -144,6 +144,15 @@ editor.directive('editorVideo', function($torrent, $window, $storage){
           scope.time = evt.target.currentTime;
           if(scope.duration > 0)
             scope.percent = 100.0 * scope.time / scope.duration;
+
+          // Limit max capture
+          if(scope.capture && !scope.capture.end){
+            var diff = scope.time - scope.capture.start;
+            if(diff > 30){
+              scope.capture.end = scope.time;
+              scope.validate(true);
+            }
+          }
         });
       });
 
@@ -169,14 +178,6 @@ editor.directive('editorVideo', function($torrent, $window, $storage){
         // Always play on seek
         if(v.paused)
           v.play();
-
-        // Load images for timestamp
-/*
-        var pictures = $torrent.get_pictures(scope.movie.imdb_id, time);
-        angular.forEach(pictures, function(picture_url){
-          console.log(picture_url);
-        });
-*/
       });
 
       // Start stop capture on movie click
